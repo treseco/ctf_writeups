@@ -38,7 +38,7 @@ ducky1 `inject.bin` with lang = 'us':
 ducky2 `inject.bin` with lang = ?:
 ```
 00000360: 0500 1d00 1800 0600 1700 0900 0505  -> decodes to -> 'bzuctf'
-		  b    z(y) u    c    t    f    ({)
+          b    z(y) u    c    t    f    ({)
 ```
 
 We can see that the language we need encodes '{' as '0505', so the correct language will have this line in the language file:
