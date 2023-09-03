@@ -15,7 +15,7 @@
 `the-all-fathers-wisdom` - ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=01eec917a381d4efe62ed137f1349127f4faeeaa, for GNU/Linux 4.4.0, not stripped
 ***
 ##### Solve
-The given file still includes the function names so when we decompile, It doesn't take long to find the function `main.print_flag()`:
+The given file still includes the function names, so when we decompile it doesn't take long to find the function `main.print_flag()`:
 
 ``` c
 void main.print_flag(undefined8 flag) {
@@ -54,7 +54,7 @@ void main.print_flag(undefined8 flag) {
 }
 ```
 
-This function has many local variables that are assigned values. there is also a for loop that loops over the values, xoring them with `0x11`, before concatenating them together and printing them. We can can copy these values into a python script to compute the xor and print the flag.
+This function has many local variables that are assigned values. The for loop interates over the values, xors them with `0x11`, then prints them. We can can copy these values into a python script to compute the xor and print the flag.
 
 ``` python
 # byte values in the local vars in main.print_flag() from ghidra
