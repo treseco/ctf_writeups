@@ -12,7 +12,7 @@
 ***
 ##### Reversing
 Opening `welcome_to_hell` in Ghidra shows a few functions. The only one that appears to do anything useful is `entry`, the first function in the binary. There are many other functions at higher addresses than entry, but they each just call syscall to exit the program. The return value of the *n*th exit function is *n*.
-```
+```c
 void entry(void)
   
 {
@@ -130,7 +130,7 @@ Ok now that the flag length is correct we are at the instuctions above, which po
 
 Each signal frame that is "restored" has the format above. `r10` is pointed to the next character in our flag. Some operations are perfomed on `rax`, but by the compare instruction it will be the correct flag character. At this point we can just contine stepping through, dumping `rax`, and setting `r10` to get the full flag.
 
-```
+```python
 #!/usr/bin/python3
   
 from pwn import *
