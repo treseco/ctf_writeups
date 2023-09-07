@@ -13,8 +13,8 @@
 `payload.txt` - ASCII text
 ***
 ##### Solve
-Initially, this challenge only provided another `inject.bin` file. As the description says, this file dosn't seem to match any language, and appears to be custom made. The challenge was later fixed to include `payload.txt`
-`payload.txt`:
+Initially, this challenge only provided another `inject.bin` file. As the description says, this file dosn't seem to match any language, and appears to be custom made. The challenge was later fixed to include `payload.txt`.
+
 ```
 STRING abcdefghijklmnopqrstuvwxyz
 STRING ABCDEFGHIJKLMNOPQRSTUVWXYZ

@@ -27,7 +27,7 @@ Ok, that didn't seem to work but it does give us a hint by telling us to 'make s
 Most characters seem to decode correctly, we can see that 'bzuctf' is probably supposed to be 'byuctf'. By compareing the data in `inject.bin` from ducky1 to the data in `inject.bin` from ducky2, we can determine what keycodes should print what characters. Using the language files in `DuckToolkit/ducktoolkit/languages` will be helpful for figuring out the keycodes.
 
 > [!WARNING] 
-> Installing DuckToolkit via pip will not include all of the language files in the git repo, so it is advised to install from git for this challenge.
+> Installing DuckToolkit via pip will not include all of the language files in the github repo, so it is advised to install from github for this challenge.
 
 ducky1 `inject.bin` with lang = 'us':
 ```
