@@ -1,13 +1,13 @@
 #writeup
 
 # LACTF 2024
-I was able to participate in LACTF this weekend with (WolvSec)[] and it was a lot of fun. I worked on some of the reversing challenges. These are my writeups for `glottem`, `the-secret-of-java-island` and `aplet321`.
+I was able to participate in LACTF this weekend with [WolvSec](https://wolvsec.org) and it was a lot of fun. We ended up placing 166th in the open division. These are my writeups for `glottem`, `the-secret-of-java-island` and `aplet321` reversing challenges.
 
 ## glottem
 + Category: Rev
 + Author: aplet123
-+ Points: TODO
-+ Solves: TODO
++ Points: 455
++ Solves: 89
 ***
 ##### Description
 > Haha glottem good!
@@ -46,7 +46,7 @@ exit(+(d!=260,[d!=61343])[0])
 ```
 
 The script is challenging to read but it essentially creates a file that is both valid python and javascript, and checks the flag input against both programs.
-Here is the resulting python file without the javascript comments
+Here is the resulting python file without the javascript comments:
 
 ```python
 e = [ ... ]
@@ -57,7 +57,7 @@ d=0; s=argv[1];for i in range(6, len(s)-2) :
 # d == 260 indicates the input flag passed the check
 exit(d!=260)
 ```
-and the javascript file
+and the javascript file:
 ```javascript
 e = [ ... ]
 alpha="abcdefghijklmnopqrstuvwxyz_"
@@ -67,7 +67,7 @@ for (let i = 0; i < s.length; i ++) {
 // d == 61343 indicates the input flag passed the check
 process.exit(d!=61343) 
 ```
-Each of these programs applies some constraints on the possible correct flags, and together they form a verifier. I spent some time trying to use an SMT solver to solve for the flag, but this approach proved challengeing. Because the flag charcters that we aresolving for are used to index into `e`, we really want concrete values rather than symbolic ones. The real insight comes from realizing that all the elements in `e` fall between `10 <= x <=17`. Since we are given that the flag is 34 chars long, and the python program only checks the chars from index 6 to 34-2, we know it checks the 26 chars between the brackets. Each of these chars increments `d` by a minimum of 10 and the total must be 260, thus each iteration of the loop must result in some element of `e` with the value 10.
+Each of these programs applies some constraints on the possible correct flags, and together they form a verifier. I spent some time trying to use an SMT solver to solve for the flag, but this approach proved challengeing. Because the flag charcters that we are solving for are used to index into `e`, we really want concrete values rather than symbolic ones. The real insight comes from realizing that all the elements in `e` fall between `10 <= x <=17`. Since we are given that the flag is 34 chars long, and the python program only checks the chars from index 6 to 34-2, we know it checks the 26 chars between the brackets. Each of these chars increments `d` by a minimum of 10 and the total must be 260, thus each iteration of the loop must result in some element of `e` with the value 10.
 With the resulting strings that correctly produce the sum of 260, we can compute the same check done by the javascript program until we find one that passes both.
 
 ```python
@@ -138,8 +138,8 @@ The solve script will take a second to run, and will return a few possible flags
 ## the-secret-of-java-island
 + Category: Rev
 + Author: aplet123
-+ Points: TODO
-+ Solves: TODO
++ Points: 312
++ Solves: 284
 ***
 ##### Description
 > The Secret of Java Island is a 2024 point-and-click graphic adventure game developed and published by LA CTF Games. It takes place in a fictional version of Indonesia during the age of hacking. The player assumes the role of Benson Liu, a young man who dreams of becoming a hacker, and explores fictional flags while solving puzzles.
@@ -148,7 +148,7 @@ The solve script will take a second to run, and will return a few possible flags
 `game.jar`: Java archive data (JAR) 
 ***
 ##### Solve
-We are provide with a `jar` file that we can open with a tool like (decompiler.com)[https://www.decompiler.com/]. by looking at `JavaIsland.java` and running the file will show us that the program presents the user with a series of choices and will only print the flag when the correct sequence is executed. `JavaIsland.java` reveals that the target.
+We are provide with a `jar` file that we can open with a tool like [decompiler.com](https://www.decompiler.com/). By looking at `JavaIsland.java` and running the file will show us that the program presents the user with a series of choices and will only print the flag when the correct sequence is executed. `JavaIsland.java` reveals that the target.
 
 ```java
 case 3:
@@ -193,7 +193,7 @@ Reaching the target involves entering case 3 with the golve item. By investigati
 
          return;
 ```
-Here the user is asked to make a series of 8 choices, and the series of choices is translated into a string. The string is then hashed and the resulting digest is checked against the correct hash. If the hash does not match we are sent to state 7 and the program exits. Because the string is a combination of 'd's and 'p's, we can hash all the possible strings and hash them with `sha256` to find the correct sequence of choices.
+Here the user is asked to make a series of 8 choices, and the series of choices is translated to a string. The string is then hashed and the resulting digest is checked against the correct hash. If the hash does not match we are sent to state 7 and the program exits. Because the string is a combination of 'd's and 'p's, we can hash all the possible strings with `sha256` to find the correct sequence of choices.
 
 ```python
 import hashlib
@@ -220,8 +220,8 @@ This script will yield the sequence: `dpddpdpp`. we can now run the game, run th
 ## aplet321
 + Category: Rev
 + Author: kaiphait
-+ Points: TODO
-+ Solves: TODO
++ Points: 199
++ Solves: 445
 ***
 ##### Description
 > Unlike Aplet123, Aplet321 might give you the flag if you beg him enough.
@@ -286,8 +286,8 @@ num_please = 39
 
 We can now craft our input and send it to the remote server.
 
-```sh
-python3 -c 'print("pretty " * 15 + "please " * 39 + "flag")' | nc chall.lac.tf 31321
+```
+$ python3 -c 'print("pretty " * 15 + "please " * 39 + "flag")' | nc chall.lac.tf 31321
 hi, i'm aplet321. how can i help?
 ok here's your flag
 lactf{next_year_i'll_make_aplet456_hqp3c1a7bip5bmnc}
